@@ -1,0 +1,49 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/CarpetFibers.proto"
+IMPORTABLE EXTERNPROTO "../protos/T3withCamera.proto"
+
+WorldInfo {
+  basicTimeStep 128
+  FPS 30
+}
+Viewpoint {
+  fieldOfView 1.5
+  orientation -0.40977671458683335 0.3896595787703268 0.8247717604616155 1.7599251240135831
+  position -0.9749891217513293 -6.641812538033646 6.599109046005484
+}
+TexturedBackground {
+  texture "empty_office"
+  skybox FALSE
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+  floorAppearance CarpetFibers {
+  }
+}
+DEF supervisor Robot {
+  translation 0 0 0.05
+  children [
+    RangeFinder {
+      translation 0 0 6
+      name "range_finder"
+      fieldOfView 1.047
+      width 1920
+      height 1080
+    }
+    Emitter {
+      channel 1
+    }
+    Receiver {
+      channel 2
+    }
+  ]
+  name "deployment"
+  controller "SupervisorSM"
+  supervisor TRUE
+}
