@@ -487,6 +487,25 @@ class SupervisorSM:
                          markersize=sz, alpha=0.85, zorder=6)
             ax3.plot([], [], "o", color="darkorange", markersize=6,
                      label="DA2 depth estimate")
+                     
+                     
+                     
+                     
+                     
+        if smooth_dists is not None:
+            h = nav_heading
+            for i in range(n_slices):
+                local_angle = ((i + 0.5) / n_slices - 0.5) * 2.0 * math.pi
+                world_angle = h + local_angle
+                d  = float(smooth_dists[i])
+                wx = robot_xy[0] + d * math.cos(world_angle)
+                wy = robot_xy[1] + d * math.sin(world_angle)
+                sc = float(scores[i]) if scores is not None else 0.0
+                sz = 12 if sc > STOP_THRESHOLD else 9 if sc > 0.06 else 6
+                ax3.plot(wx, wy, "o", color="cyan",
+                         markersize=sz, alpha=0.85, zorder=7)
+            ax3.plot([], [], "o", color="cyan", markersize=8,
+                     label="Smoothed DA2 estimate")
 
         for txy in all_targets:
             is_primary = (target_xy is not None and
